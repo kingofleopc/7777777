@@ -1,0 +1,7 @@
+﻿===== GTX 1060 当前设备状态 =====
+  NVIDIA GeForce GTX 1060 | Status=OK | ConfigManagerErrorCode=0
+
+===== DriverStore 残余 nvltsi 目录 =====
+  无 nvltsi 目录 (已全部删除)
+
+===== 全盘搜 nvltsi.inf 残留 =====

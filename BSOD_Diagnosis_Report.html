@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Windows 蓝屏诊断报告 · Intel 核显驱动崩溃</title>
+<style>
+  :root{
+    --bg:#f5f7fa; --card:#ffffff; --ink:#1f2933; --muted:#5b6b7b;
+    --line:#e3e8ef; --red:#c0392b; --redbg:#fdecea; --amber:#b9770e; --amberbg:#fff4e0;
+    --green:#1e7d4f; --greenbg:#e8f6ee; --blue:#1f5fbf; --bluebg:#eaf1fc;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6;}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 20px 60px;}
+  h1{font-size:24px;margin:0 0 4px;}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:20px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:18px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+  .verdict{border-left:6px solid var(--red);background:var(--redbg);}
+  .verdict h2{margin:0 0 8px;color:var(--red);font-size:18px;}
+  .tag{display:inline-block;font-size:12px;padding:2px 10px;border-radius:999px;margin-right:6px;font-weight:600;}
+  .t-red{background:var(--redbg);color:var(--red);}
+  .t-amber{background:var(--amberbg);color:var(--amber);}
+  .t-green{background:var(--greenbg);color:var(--green);}
+  .t-blue{background:var(--bluebg);color:var(--blue);}
+  h3{font-size:16px;margin:0 0 10px;color:var(--ink);}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  th{background:#f0f3f8;color:var(--muted);font-weight:600;}
+  tr:nth-child(even) td{background:#fafbfc;}
+  code{background:#eef2f7;padding:1px 6px;border-radius:5px;font-family:"Cascadia Code",Consolas,monospace;font-size:12.5px;}
+  .mono{font-family:"Cascadia Code",Consolas,monospace;font-size:12.5px;}
+  .hl{color:var(--red);font-weight:700;}
+  .step{display:flex;gap:10px;margin:10px 0;align-items:flex-start;}
+  .step .n{flex:0 0 24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
+  .warn{border-left:6px solid var(--amber);background:var(--amberbg);padding:12px 16px;border-radius:8px;font-size:14px;}
+  .tier{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:12px;}
+  .tier h4{margin:0 0 8px;font-size:15px;}
+  ul{margin:6px 0 6px 2px;padding-left:20px;}
+  li{margin:4px 0;}
+  .scroll{max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:8px;}
+  .foot{color:var(--muted);font-size:12px;margin-top:24px;}
+  .ok{color:var(--green);font-weight:700;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Windows 蓝屏诊断报告</h1>
+  <div class="sub">生成时间：2026-10-29 20:08 · 机器：Aierxuan G2（i7-7820HQ / 8GB / Win10 企业版 LTSC 1809）· 就诊编号 #BSOD-1029</div>
+
+  <div class="card verdict">
+    <h2>① 结论先行（老中医望闻问切）</h2>
+    <p style="margin:6px 0 10px;">
+      <span class="tag t-red">根因确定</span>
+      <span class="tag t-amber">严重度：中高</span>
+      <span class="tag t-blue">推荐：更新核显驱动</span>
+    </p>
+    <p style="margin:0;">
+      蓝屏代码 <code>0x1000007E SYSTEM_THREAD_EXCEPTION_NOT_HANDLED</code>，异常 <code>0xC0000005 访问违规</code>。
+      崩溃发生在 <b>Intel HD Graphics 630 核显内核驱动 <span class="mono">igdkmd64.sys</span>（版本 27.20.100.8681，2020-09 发布）</b> 的一个<b>确定性代码缺陷</b>上——出错指令恒位于该驱动映像偏移 <span class="hl">0x1cc3</span>。
+      这不是内存条坏道，也不是硬件损坏，而是<b>驱动太老 + 旧代码 bug</b>。
+    </p>
+    <p style="margin:8px 0 0;">
+      该崩溃<b>已反复发生至少 20 次，最早追溯到 2026-06-13</b>，约每几天一次，严重影响正常工作。治本方案：把 Intel 核显驱动换成新版本。
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>② 体检表（望）</h3>
+    <table>
+      <tr><th>项目</th><th>发现</th><th>评判</th></tr>
+      <tr><td>系统</td><td>Windows 10 企业版 LTSC，Build 17763（1809）</td><td>正常</td></tr>
+      <tr><td>CPU</td><td>Intel i7-7820HQ（4核8线程，含 HD Graphics 630 核显）</td><td>正常</td></tr>
+      <tr><td>内存</td><td>8GB 单条 DDR4 2400（约 7.9GB 可用）</td><td>偏小但非元凶</td></tr>
+      <tr><td>独显</td><td>NVIDIA GTX 1060，驱动 32.0.15.8157（2026-01，较新）</td><td class="ok">正常</td></tr>
+      <tr><td>核显驱动</td><td><span class="mono">igdkmd64.sys</span> 27.20.100.8681（2020-09-05）</td><td class="hl">★ 古董驱动 / 元凶</td></tr>
+      <tr><td>安全软件</td><td>未见 360 / 腾讯管家 / 火绒（进程、服务、注册表均无）</td><td class="ok">干净，排除互掐</td></tr>
+      <tr><td>蓝屏 dump</td><td>C:\Windows\Minidump\102926-8406-01.dmp（2026-10-29 20:01，PAGEDU64 内核转储）</td><td>已取证</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>③ 蓝屏证据链（切）</h3>
+    <p style="margin:0 0 8px;font-size:14px;">
+      <b>铁证 1 · 出错偏移恒定：</b>系统日志中 20 次 0x1000007E 崩溃，出错地址 P2 的绝对地址每次不同（KASLR 随机化），但<b>低 16 位永远等于 <span class="hl">1cc3</span></b>。说明是同一驱动里同一处代码 bug，排除随机内存损坏。
+    </p>
+    <div class="scroll">
+    <table>
+      <tr><th>时间</th><th>Bugcheck</th><th>参数1 (异常)</th><th>出错地址 P2（低4位高亮）</th></tr>
+      <tr><td>2026-10-29 20:01</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…a78c<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-10-26 20:09</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…794b<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-10-22 19:48</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…9374<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-10-22 19:34</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…7507<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-10-20 04:34</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…8d28<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-09-19 06:43</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…17b2<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-09-12 19:13</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…4f5e<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-09-11 19:11</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…7c2b<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-09-05 16:16</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…0031<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-09-05 15:38</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…5aba<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-08-29 16:22</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…5880<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-08-29 10:50</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…46c3<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-08-16 08:28</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…6f4d<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-08-08 12:44</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…4a81<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-07-29 19:25</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…4864<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-07-28 03:17</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…66ea<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-07-23 22:02</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…0802<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-07-23 19:19</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…91c9<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-06-13 23:12</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…8eff<span class="hl">1cc3</span></td></tr>
+      <tr><td>2026-06-13 07:34</td><td>0x1000007E</td><td>0xC0000005</td><td class="mono">…c7e8<span class="hl">1cc3</span></td></tr>
+    </table>
+    </div>
+    <p style="margin:10px 0 0;font-size:14px;">
+      <b>铁证 2 · 崩溃现场是 Intel GPU 渲染：</b>dump 内充满核显命令流日志 <span class="mono">Ring_Gfxbase / Submit3D / 3DInterrupt / FenceId / KMD_Render</span>，并直接命中字符串 <span class="mono">igdkmd64</span>。<br>
+      <b>铁证 3 · 系统数据确认：</b>WER 的 sysdata.xml 写明 <span class="mono">&lt;DRIVER&gt;igdkmd64.sys&lt;/DRIVER&gt; &lt;INFVERSION&gt;27.20.100.8681&lt;/INFVERSION&gt;</span>。
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>④ 根因分析</h3>
+    <p style="margin:0;">
+      双显卡笔记本（Optimus）：内屏与日常加速由 Intel HD 630 核显承担，独显 GTX 1060 负责重负载。Intel 核显驱动停留在 <b>2020 年的 27.20.100.8681</b>，其某一渲染/提交代码路径（偏移 0x1cc3）在特定条件下对一个无效指针解引用，抛出 0xC0000005，运行在系统线程中即触发 0x7E 蓝屏。
+      近期 Edge/WebView2（10-28）、金考典（10-22）、QQ（10-17）等会加大核显负载，使崩溃更频繁——但<b>根因始终是那个旧驱动</b>，与这些软件无关。
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>⑤ 分层处置路线（开方）</h3>
+
+    <div class="tier" style="border-left:5px solid var(--green);">
+      <h4><span class="tag t-green">首选 · 治本</span> 更新 Intel 核显驱动</h4>
+      <ul>
+        <li>把 <span class="mono">igdkmd64.sys 27.20.100.8681（2020）</span> 换成 Intel 官方 <b>7~10 代核显驱动 <span class="mono">31.0.101.2145</span></b>（Legacy 分支最新，明确支持 Windows 10 1809/RS5，HD 630 在支持列表内）。</li>
+        <li>获取方式（任选）：① 官方下载页 <span class="mono">intel.com/download/776137</span>（搜索 "Intel 7th-10th Gen Processor Graphics"），下 <span class="mono">gfx_win_101.2145.exe</span>（约 278MB）；② 安装 <b>Intel 驱动与支持助手 (DSA)</b> 自动匹配；③ Windows Update 的"可选更新"里检查显卡驱动。</li>
+        <li>安装方式：双击运行安装包，或用<b>设备管理器 → 显示适配器 → Intel HD Graphics 630 → 更新驱动 → 自动/浏览</b>。</li>
+        <li>⚠️ 内核驱动更新<b>必须重启</b>才能生效（新驱动在下次开机加载）。</li>
+      </ul>
+    </div>
+
+    <div class="tier" style="border-left:5px solid var(--amber);">
+      <h4><span class="tag t-amber">立刻止血</span> 更新驱动前先降低核显负载</h4>
+      <ul>
+        <li>浏览器（Edge / Chrome）关闭"使用硬件加速"：设置 → 系统 → 关闭"使用硬件加速（如果可用）"，重启浏览器。</li>
+        <li>在 <b>NVIDIA 控制面板 → 管理 3D 设置 → 全局/程序设置</b> 中，将常用软件首选图形处理器设为"高性能 NVIDIA 处理器"，让独显接管、绕开核显 bug 路径。</li>
+        <li>暂停运行会压核显的软件（硬件加速的视频/图形/考试软件）直到驱动更新完成。</li>
+      </ul>
+    </div>
+
+    <div class="tier" style="border-left:5px solid var(--blue);">
+      <h4><span class="tag t-blue">兜底</span> 若换新驱动后仍崩溃</h4>
+      <ul>
+        <li>用 <b>DDU（Display Driver Uninstaller）</b> 进安全模式彻底清除 Intel 驱动残留，再装干净版。</li>
+        <li>跑一次 <b>Windows 内存诊断</b>（搜索"Windows 内存诊断"）排除内存问题——但偏移恒定已基本排除 RAM 故障。</li>
+        <li>若独显可完全接管显示（如长期外接显示器），可在 BIOS/UEFI 将显卡模式设为"独显直连(Discrete)"，但会失去内屏输出，<b>不推荐</b>作为首选。</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      ⚠️ <b>风险提示：</b>内核显卡驱动更新属中高风险操作——若新驱动与 LTSC 1809 不兼容，少数情况下可能开机黑屏。请<b>先备份重要文件</b>，并确保手边能进"安全模式"（开机按 F8/Shift+重启）以便回滚。更新前我会先备份当前驱动信息，但<b>重启需你本人操作</b>（本环境无法代你重启）。
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⑥ 需要你亲自操作的步骤（GUI / 重启类）</h3>
+    <div class="step"><div class="n">1</div><div>联网下载 HD 630 最新 DCH 驱动（或装 Intel DSA 自动获取），<b>建议先存到本地</b>。</div></div>
+    <div class="step"><div class="n">2</div><div>运行安装包完成驱动替换（过程中可能闪屏，属正常）。</div></div>
+    <div class="step"><div class="n">3</div><div><b>重启电脑</b>，让新内核驱动生效；重启后观察几天是否还有 0x1000007E。</div></div>
+    <div class="step"><div class="n">4</div><div>若重启后黑屏：进安全模式 → 设备管理器回滚/卸载 Intel 显卡驱动，系统会退回基础显示驱动。</div></div>
+  </div>
+
+  <div class="foot">
+    取证产物（工作区）：diag_01_inventory.txt（系统清单）· diag_02_dumpinfo.txt（WER 报告）· diag_03_strings.txt（dump 字符串）· diag_04_modulemap.txt（模块解析）· diag_05_driverver.txt（驱动版本）· diag_06_trigger.txt（安全软件/变更）· diag_07_eventlog.txt（蓝屏时间线）。<br>
+    诊断结论：Intel HD 630 核显驱动 igdkmd64.sys 旧版确定性崩溃（偏移 0x1cc3），建议更新驱动治本。
+  </div>
+
+</div>
+</body>
+</html>

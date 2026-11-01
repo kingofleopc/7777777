@@ -1,0 +1,40 @@
+﻿===== 当前 NVIDIA 相关驱动包 (DriverStore) =====
+C:\Windows\System32\DriverStore\FileRepository\buttonconverter.inf_amd64_62e1140d56115907
+C:\Windows\System32\DriverStore\FileRepository\fusionv2.inf_amd64_e3e9a2c3f6fce821
+C:\Windows\System32\DriverStore\FileRepository\netnvm64.inf_amd64_35bbbe80dec15683
+C:\Windows\System32\DriverStore\FileRepository\netnvma.inf_amd64_7080f6b8ea1744fb
+C:\Windows\System32\DriverStore\FileRepository\nvdimm.inf_amd64_c9f491d4ab2f8221
+C:\Windows\System32\DriverStore\FileRepository\nvhda.inf_amd64_17d2b40c60a9e838
+C:\Windows\System32\DriverStore\FileRepository\nvhda.inf_amd64_2a049e947c82e3a7
+C:\Windows\System32\DriverStore\FileRepository\nvhda.inf_amd64_6a37c1744e6d5825
+C:\Windows\System32\DriverStore\FileRepository\nvhda.inf_amd64_feda8f9c6714589f
+C:\Windows\System32\DriverStore\FileRepository\nvlt.inf_amd64_8156357f9d6cad11
+C:\Windows\System32\DriverStore\FileRepository\nvlti.inf_amd64_238e253663508a80
+C:\Windows\System32\DriverStore\FileRepository\nvltsi.inf_amd64_78dd2b350c699ecc
+C:\Windows\System32\DriverStore\FileRepository\nvltsi.inf_amd64_7d04bd4cae6a0fde
+C:\Windows\System32\DriverStore\FileRepository\nvltsi.inf_amd64_ebbed3c683b430e5
+C:\Windows\System32\DriverStore\FileRepository\nvraid.inf_amd64_144351277838b429
+C:\Windows\System32\DriverStore\FileRepository\nvvad.inf_amd64_35079c3b2e98dd66
+C:\Windows\System32\DriverStore\FileRepository\stornvme.inf_amd64_d2db3c703a0a095d
+
+===== NVIDIA 显示驱动 oem 包 (pnputil) =====
+原始名称:      nvhda.inf
+提供程序名称:      NVIDIA Corporation
+原始名称:      nvhda.inf
+提供程序名称:      NVIDIA Corporation
+原始名称:      nvhda.inf
+提供程序名称:      NVIDIA Corporation
+原始名称:      nvhda.inf
+提供程序名称:      NVIDIA Corporation
+原始名称:      nvlt.inf
+提供程序名称:      NVIDIA
+原始名称:      nvlti.inf
+提供程序名称:      NVIDIA
+原始名称:      nvltsi.inf
+提供程序名称:      NVIDIA
+原始名称:      nvltsi.inf
+提供程序名称:      NVIDIA
+原始名称:      nvltsi.inf
+提供程序名称:      NVIDIA
+原始名称:      nvvad.inf
+提供程序名称:      NVIDIA

@@ -1,0 +1,3 @@
+﻿===== GTX 1060 当前绑定驱动 =====
+  设备: NVIDIA GeForce GTX 1060
+  Inf: oem32.inf | 版本: 32.0.15.6614 | 提供方: NVIDIA

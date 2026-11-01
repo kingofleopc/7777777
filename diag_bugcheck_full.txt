@@ -1,0 +1,1 @@
+﻿计算机已经从检测错误后重新启动。检测错误: 0x1000007e (0xffffffffc0000005, 0xfffff80057001cc3, 0xffff9d0fc2b9f2f8, 0xffff9d0fc2b9eb40)。已将转储的数据保存在: C:\Windows\Minidump\103126-6609-01.dmp。报告 ID: 28c139a9-57f4-407c-a7a8-69a71bcff140。

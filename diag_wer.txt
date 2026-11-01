@@ -1,0 +1,35 @@
+﻿===== [A] 最近1天的 WER Report.wer =====
+  找到 13 个。最新:
+  ---- C:\ProgramData\Microsoft\Windows\WER\ReportArchive\Kernel_1000007e_f5a5197df501dbf33a6bd2ece45bce29b1d335_00000000_cab_178449e9\Report.wer | 2026-10-31 06:53:36
+  ---- C:\ProgramData\Microsoft\Windows\WER\ReportArchive\NonCritical_Update;_f48b6041cd7ca6362fef4de0533d278afeda7_00000000_057df52e\Report.wer | 2026-10-30 20:53:08
+  ---- C:\ProgramData\Microsoft\Windows\WER\ReportArchive\NonCritical_Acquisition;DSIC_e4ac5bed5552f5646d74329b6f96e6a85c9f865_00000000_06513e4e\Report.wer | 2026-10-30 20:02:46
+
+===== [B] 最新 Report.wer 内容(关键行) =====
+    Response.type=4
+    Sig[0].Name=代码
+    Sig[0].Value=1000007e
+    Sig[1].Name=参数 1
+    Sig[1].Value=ffffffffc0000005
+    Sig[2].Name=参数 2
+    Sig[2].Value=fffff80057001cc3
+    Sig[3].Name=参数 3
+    Sig[3].Value=ffff9d0fc2b9f2f8
+    Sig[4].Name=参数 4
+    Sig[4].Value=ffff9d0fc2b9eb40
+    Sig[5].Name=操作系统版本
+    Sig[5].Value=10_0_17763
+    Sig[6].Name=Service Pack
+    Sig[6].Value=0_0
+    Sig[7].Name=产品
+    Sig[7].Value=256_1
+    DynamicSig[1].Name=OS 版本
+    DynamicSig[1].Value=10.0.17763.2.0.0.256.125
+    DynamicSig[2].Name=区域设置 ID
+    DynamicSig[2].Value=2052
+    File[1].Path=WER-8140-0.sysdata.xml
+    File[1].Original.Path=\\?\C:\Windows\TEMP\WER-8140-0.sysdata.xml
+    Ns[1].Name=p1
+    Ns[2].Name=p2
+    Ns[3].Name=p3
+    Ns[4].Name=p4
+    FriendlyEventName=异常关闭

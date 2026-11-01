@@ -1,0 +1,10 @@
+﻿===== NVIDIA 驱动文件信息 =====
+文件: C:\Windows\System32\DriverStore\FileRepository\nvltsi.inf_amd64_7d04bd4cae6a0fde\nvlddmkm.sys
+版本: 32.0.15.8157 | 产品: 32.0.15.8157
+签名: Valid
+修改时间: 2025-10-10 22:57:40
+
+===== NVIDIA 相关近期事件 (System log, 近7天, nvlddmkm/NVIDIA) =====
+共 1 条。最近 5 条:
+  [2026-10-27 22:14:42] Microsoft-Windows-Kernel-General / ID 16
+事件查询失败: 无法将“Join-String”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次。

@@ -1,0 +1,5 @@
+﻿===== GTX 1060 当前绑定的驱动包 =====
+设备: NVIDIA Virtual Audio Device (Wave Extensible) (WDM)
+  Inf: oem31.inf | 驱动版本: 4.65.0.3 | 日期: 02/28/2024 08:00:00
+设备: NVIDIA GeForce GTX 1060
+  Inf: oem37.inf | 驱动版本: 32.0.15.8157 | 日期: 10/09/2025 08:00:00
