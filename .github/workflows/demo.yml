@@ -1,0 +1,11 @@
+name: demo-ci
+on:
+  pull_request:
+  push:
+    branches: [demo/pr-ci]
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "WorkBuddy gh CI demo OK"
